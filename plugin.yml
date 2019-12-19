@@ -1,0 +1,9 @@
+main: srv.brokenmods.mccountdown.Main
+name: MCCountdown
+version: 1.0
+author: me
+description: A countdown timer
+commands:
+    countdown:
+        description: A countdown timer
+        usage: /countdown
