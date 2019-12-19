@@ -24,11 +24,18 @@ public class Main extends JavaPlugin {
 	
 	
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-    	if (command.getName().equalsIgnoreCase("countdown")) {
-        	String arg1 = args[0];
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) 
+    {
+    	if (command.getName().equalsIgnoreCase("countdown")) 
+    	{
+    		
+        	String arg1 = "";
         	String arg2 = "";
         	
+        	if(args.length == 0)
+        		arg1 = "3";
+        	if(args.length > 0)
+        		arg1 = args[0];
         	if(args.length > 1)
         		arg2 = args[1];
         	
@@ -51,8 +58,14 @@ public class Main extends JavaPlugin {
         	}
         	catch(Exception e)
         	{
-        		sender.sendMessage(ChatColor.DARK_RED + "Argument must be an integer value. No Decimals or commas.");
+        		sender.sendMessage(ChatColor.DARK_RED + "Argument must be an integer value or \"stop\" to stop a running countdown. No Decimals or Commas.");
+        				
         		return false;
+        	}
+        	if(initialTime < 3)
+        	{
+				sender.sendMessage(ChatColor.GRAY + "The minimum value for the countdown is 3 seconds.");
+				return true;
         	}
         	if(MCCountdownInProgress)
         	{
@@ -94,7 +107,6 @@ public class Main extends JavaPlugin {
             							player.sendMessage(ChatColor.BLUE +"" + ChatColor.BOLD + this.time + " Second Countdown Initiated.");
             						}
             					}
-            					this.time += 1;
             					this.initiated = true;
             					MCCountdownInProgress = true;
             					return;
@@ -133,10 +145,15 @@ public class Main extends JavaPlugin {
 
 	        					for(final Player player : Bukkit.getOnlinePlayers())
 	        					{
-	        						player.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + this.time + " seconds remaining...");
+	        						if(this.time == 1)
+	        						{
+	        							player.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + this.time + " second remaining...");
+	        						}
+	        						else player.sendMessage(ChatColor.RED +""+ ChatColor.BOLD + this.time + " seconds remaining...");
 	        					}
         					}
-        					else if(this.time == 0) {
+        					else if(this.time == 0) 
+        					{
             					for(final Player player : Bukkit.getOnlinePlayers())
             					{
             						player.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "GO!!!");
